@@ -200,10 +200,22 @@ console.log(token); // Use este token na criação da fatura</code></pre>
                                 <td>Método de pagamento: <code>pix</code> ou <code>credit_card</code></td>
                             </tr>
                             <tr>
-                                <td><code>currency</code></td>
+                                <td><code>product_fisical</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Moeda: <code>BRL</code> ou <code>USD</code></td>
+                                <td>Não</td>
+                                <td>Indica se o produto é físico</td>
+                            </tr>
+                            <tr>
+                                <td><code>ip_payer</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>IP do pagador</td>
+                            </tr>
+                            <tr>
+                                <td><code>total_price_cents</code></td>
+                                <td>integer</td>
+                                <td>Não</td>
+                                <td>Valor total em centavos (se não informado, é calculado a partir dos itens)</td>
                             </tr>
                             <tr>
                                 <td><code>postback_url</code></td>
@@ -252,7 +264,7 @@ console.log(token); // Use este token na criação da fatura</code></pre>
                                 <td>Nome completo do pagador</td>
                             </tr>
                             <tr>
-                                <td><code>document</code></td>
+                                <td><code>cpf_cnpj</code></td>
                                 <td>string</td>
                                 <td>Sim</td>
                                 <td>CPF ou CNPJ (apenas números)</td>
@@ -270,10 +282,40 @@ console.log(token); // Use este token na criação da fatura</code></pre>
                                 <td>Telefone com DDD</td>
                             </tr>
                             <tr>
-                                <td><code>address</code></td>
-                                <td>object</td>
+                                <td><code>address_zip</code></td>
+                                <td>string</td>
                                 <td>Sim</td>
-                                <td>Endereço completo</td>
+                                <td>CEP (apenas números)</td>
+                            </tr>
+                            <tr>
+                                <td><code>address_line</code></td>
+                                <td>string</td>
+                                <td>Sim</td>
+                                <td>Logradouro (rua, avenida, etc.)</td>
+                            </tr>
+                            <tr>
+                                <td><code>address_number</code></td>
+                                <td>string</td>
+                                <td>Sim</td>
+                                <td>Número do endereço</td>
+                            </tr>
+                            <tr>
+                                <td><code>address_complement</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Complemento do endereço</td>
+                            </tr>
+                            <tr>
+                                <td><code>address_city</code></td>
+                                <td>string</td>
+                                <td>Sim</td>
+                                <td>Cidade</td>
+                            </tr>
+                            <tr>
+                                <td><code>address_state</code></td>
+                                <td>string</td>
+                                <td>Sim</td>
+                                <td>Estado (sigla, ex: SP)</td>
                             </tr>
                         </tbody>
                     </table>
@@ -294,8 +336,80 @@ console.log(token); // Use este token na criação da fatura</code></pre>
                             <tr>
                                 <td><code>token</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Token gerado pelo SDK</td>
+                                <td>Condicional</td>
+                                <td>Token gerado pelo SDK (use no lugar dos dados brutos do cartão)</td>
+                            </tr>
+                            <tr>
+                                <td><code>installment</code></td>
+                                <td>integer</td>
+                                <td>Não</td>
+                                <td>Número de parcelas</td>
+                            </tr>
+                            <tr>
+                                <td><code>number</code></td>
+                                <td>string</td>
+                                <td>Condicional</td>
+                                <td>Número do cartão (use somente se não utilizar token)</td>
+                            </tr>
+                            <tr>
+                                <td><code>first_name</code></td>
+                                <td>string</td>
+                                <td>Condicional</td>
+                                <td>Primeiro nome impresso no cartão</td>
+                            </tr>
+                            <tr>
+                                <td><code>last_name</code></td>
+                                <td>string</td>
+                                <td>Condicional</td>
+                                <td>Sobrenome impresso no cartão</td>
+                            </tr>
+                            <tr>
+                                <td><code>month</code></td>
+                                <td>string</td>
+                                <td>Condicional</td>
+                                <td>Mês de expiração (MM)</td>
+                            </tr>
+                            <tr>
+                                <td><code>year</code></td>
+                                <td>string</td>
+                                <td>Condicional</td>
+                                <td>Ano de expiração (YYYY)</td>
+                            </tr>
+                            <tr>
+                                <td><code>security_code</code></td>
+                                <td>string</td>
+                                <td>Condicional</td>
+                                <td>Código de segurança (CVV)</td>
+                            </tr>
+                            <tr>
+                                <td><code>cavv</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Valor de autenticação para 3D Secure</td>
+                            </tr>
+                            <tr>
+                                <td><code>xid</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>ID de transação para 3D Secure</td>
+                            </tr>
+                            <tr>
+                                <td><code>eci</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Electronic Commerce Indicator (3D Secure)</td>
+                            </tr>
+                            <tr>
+                                <td><code>version</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Versão do protocolo 3D Secure</td>
+                            </tr>
+                            <tr>
+                                <td><code>referenceid</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>ID de referência da autenticação 3D Secure</td>
                             </tr>
                         </tbody>
                     </table>
@@ -318,6 +432,12 @@ console.log(token); // Use este token na criação da fatura</code></pre>
                                 <td>string</td>
                                 <td>Sim</td>
                                 <td>Nome do item</td>
+                            </tr>
+                            <tr>
+                                <td><code>description</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Descrição do item</td>
                             </tr>
                             <tr>
                                 <td><code>quantity</code></td>
@@ -343,26 +463,23 @@ console.log(token); // Use este token na criação da fatura</code></pre>
                     </div>
                     <pre><code>{
   "method": "pix",
-  "currency": "BRL",
   "postback_url": "https://seusite.com/webhook",
   "payer": {
     "name": "João Silva",
-    "document": "12345678900",
+    "cpf_cnpj": "12345678900",
     "email": "joao@example.com",
     "phone": "11999999999",
-    "address": {
-      "street": "Rua Exemplo",
-      "number": "123",
-      "complement": "Apto 45",
-      "neighborhood": "Centro",
-      "city": "São Paulo",
-      "state": "SP",
-      "zipcode": "01234567"
-    }
+    "address_zip": "01234567",
+    "address_line": "Rua Exemplo",
+    "address_number": "123",
+    "address_complement": "Apto 45",
+    "address_city": "São Paulo",
+    "address_state": "SP"
   },
   "items": [
     {
       "name": "Produto Exemplo",
+      "description": "Descrição do produto",
       "quantity": 2,
       "unit_price": 5000
     }
@@ -378,29 +495,28 @@ console.log(token); // Use este token na criação da fatura</code></pre>
                     </div>
                     <pre><code>{
   "method": "credit_card",
-  "currency": "BRL",
   "postback_url": "https://seusite.com/webhook",
+  "ip_payer": "177.0.0.1",
   "payer": {
     "name": "João Silva",
-    "document": "12345678900",
+    "cpf_cnpj": "12345678900",
     "email": "joao@example.com",
     "phone": "11999999999",
-    "address": {
-      "street": "Rua Exemplo",
-      "number": "123",
-      "complement": "Apto 45",
-      "neighborhood": "Centro",
-      "city": "São Paulo",
-      "state": "SP",
-      "zipcode": "01234567"
-    }
+    "address_zip": "01234567",
+    "address_line": "Rua Exemplo",
+    "address_number": "123",
+    "address_complement": "Apto 45",
+    "address_city": "São Paulo",
+    "address_state": "SP"
   },
   "card": {
-    "token": "tok_abc123xyz456..."
+    "token": "tok_abc123xyz456...",
+    "installment": 1
   },
   "items": [
     {
       "name": "Produto Exemplo",
+      "description": "Descrição do produto",
       "quantity": 1,
       "unit_price": 10000
     }
